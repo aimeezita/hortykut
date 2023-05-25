@@ -10,30 +10,26 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/produto")
 public class ProdutoController {
-	
     @Autowired
     private ProdutoRepository produtoRepository ;
-    
     @GetMapping
     public List<Produto> listarUsuarios() {
         return produtoRepository.findAll();
     }
-    
     @GetMapping("/{id}")
     public Optional<Produto> buscarProdutoPorId(@PathVariable Long id) {
       return produtoRepository.findById(id);
     }
-    
     @PostMapping
     public Produto criarProduto(@RequestBody Produto produto){
         return produtoRepository.save(produto);
     }
-    
     @PutMapping("/{id}")
     public Produto atualizarProduto(@PathVariable Long id, @RequestBody Produto produtoAtualizado) {
         Optional<Produto> produtoExistente = produtoRepository.findById(id);
+
         if (produtoExistente.isPresent()) {
-            Produto produto = produtoExistente.get();
+        	Produto produto = produtoExistente.get();
             produto.setConexao(produtoAtualizado.getConexao());
             produto.setMentorias(produtoAtualizado.getMentorias());
             produto.setCursos(produtoAtualizado.getCursos());
@@ -42,7 +38,6 @@ public class ProdutoController {
             throw new IllegalArgumentException("ID do usuário inválido: " + id);
         }
     }
-    
     @DeleteMapping("/{id}")
     public void deletarProduto(@PathVariable Long id) {
         produtoRepository.deleteById(id);
