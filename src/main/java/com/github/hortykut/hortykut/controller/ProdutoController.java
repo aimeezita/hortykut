@@ -30,9 +30,9 @@ public class ProdutoController {
 
         if (produtoExistente.isPresent()) {
         	Produto produto = produtoExistente.get();
-            produto.setConexao(produtoAtualizado.getConexao());
-            produto.setMentorias(produtoAtualizado.getMentorias());
-            produto.setCursos(produtoAtualizado.getCursos());
+            produto.setProduto(produtoAtualizado.getProduto());
+            produto.setResponsavel(produtoAtualizado.getResponsavel());
+            produto.setValor(produtoAtualizado.getValor());
             return produtoRepository.save(produto);
         } else {
             throw new IllegalArgumentException("ID do usuário inválido: " + id);
