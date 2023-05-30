@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.github.hortykut.hortykut.model.Usuario;
 import com.github.hortykut.hortykut.model.UsuarioLogin;
 import com.github.hortykut.hortykut.repository.UsuarioRepository;
-
 
 @Service
 public class UsuarioService {
