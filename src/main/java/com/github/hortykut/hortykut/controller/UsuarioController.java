@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.hortykut.hortykut.model.Usuario;
 import com.github.hortykut.hortykut.model.UsuarioLogin;
 import com.github.hortykut.hortykut.repository.UsuarioRepository;
+import com.github.hortykut.hortykut.service.UsuarioService;
 
 import jakarta.validation.Valid;
 
