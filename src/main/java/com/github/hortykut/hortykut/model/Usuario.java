@@ -25,14 +25,14 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank(message = "Este campo é obrigatorio")
+	@NotNull(message = "Este campo é obrigatorio")
 	private String nome;
 	
 	@NotNull(message = "Este campo é obrigatorio")
 	@Email(message = "O Atributo Usuário deve ser um email válido!")
 	private String usuario;
 	
-	@NotNull(message = "Este campo é obrigatorio")
+	@NotBlank(message = "Este campo é obrigatorio")
 	@Size(min = 8, message = "A Senha deve ter no mínimo 8 caracteres")
 	private String senha;
 	

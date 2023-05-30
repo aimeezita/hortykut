@@ -11,46 +11,55 @@ public class Produto {
     private Long id;
 
     @NotBlank(message = "Este campo é obrigatório")
-    private String Conexao;
-    @NotBlank(message = "Este campo é obrigatório")
-    private String Mentorias;
-    @NotBlank(message = "Este campo é obrigatorio")
-    private String Cursos;
-
-    public Long getId() {
-        return id;
-        
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getConexao() {
-        return Conexao;
-    }
-
-    public void setConexao(String conexao) {
-        Conexao = conexao;
-    }
-
-    public String getMentorias() {
-        return Mentorias;
-    }
-
-    public void setMentorias(String mentorias) {
-        Mentorias = mentorias;
-    }
-
-    public String getCursos() {
-        return Cursos;
-    }
-
-    public void setCursos(String cursos) {
-        Cursos = cursos;
-    }
+    private String produto;
     
-    public Categoria getCategoria() {
+    @NotBlank(message = "Este campo é obrigatório")
+    private String valor;
+    
+    @NotBlank(message = "Este campo é obrigatorio")
+    private String responsavel;
+    
+	@ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+    
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getProduto() {
+		return produto;
+	}
+
+	public void setProduto(String produto) {
+		this.produto = produto;
+	}
+
+	public String getValor() {
+		return valor;
+	}
+
+	public void setValor(String valor) {
+		this.valor = valor;
+	}
+
+	public String getResponsavel() {
+		return responsavel;
+	}
+
+	public void setResponsavel(String responsavel) {
+		this.responsavel = responsavel;
+	}
+
+	public Categoria getCategoria() {
 		return categoria;
 	}
 
@@ -65,14 +74,4 @@ public class Produto {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-
-
-
-	@ManyToOne
-    @JoinColumn(name = "categoria_id")
-    private Categoria categoria;
-    
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
 }
