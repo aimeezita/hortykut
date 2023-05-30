@@ -8,8 +8,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import com.generation.hortykut.model.Usuario;
-import com.generation.hortykut.repository.UsuarioRepository;
+
+import com.github.hortykut.hortykut.model.Usuario;
+import com.github.hortykut.hortykut.repository.UsuarioRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

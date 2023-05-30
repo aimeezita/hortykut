@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import com.generation.hortykut.model.Usuario;
+import com.github.hortykut.hortykut.model.Usuario;
 
 public class UserDetailsImpl implements UserDetails {
 	
