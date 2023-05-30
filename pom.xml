@@ -17,7 +17,11 @@
         <java.version>17</java.version>
     </properties>
     <dependencies>
+<<<<<<< HEAD
         <dependency>
+=======
+		<dependency>
+>>>>>>> b414c132dfd9fb2da28e2103f49756f03a992a08
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
@@ -26,10 +30,13 @@
     		<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
+<<<<<<< HEAD
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 		</dependency>
 		<dependency>
+=======
+>>>>>>> b414c132dfd9fb2da28e2103f49756f03a992a08
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
 			<version>0.11.5</version>
@@ -73,8 +80,12 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+<<<<<<< HEAD
     </dependencies>
 
+=======
+	</dependencies>
+>>>>>>> b414c132dfd9fb2da28e2103f49756f03a992a08
     <build>
         <plugins>
             <plugin>
@@ -83,5 +94,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
