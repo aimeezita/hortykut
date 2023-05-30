@@ -14,7 +14,7 @@ public class Produto {
     private String produto;
     
     @NotBlank(message = "Este campo é obrigatório")
-    private String valor;
+    private double valor;
     
     @NotBlank(message = "Este campo é obrigatorio")
     private String responsavel;
@@ -43,11 +43,11 @@ public class Produto {
 		this.produto = produto;
 	}
 
-	public String getValor() {
+	public double getValor() {
 		return valor;
 	}
 
-	public void setValor(String valor) {
+	public void setValor(double valor) {
 		this.valor = valor;
 	}
 
