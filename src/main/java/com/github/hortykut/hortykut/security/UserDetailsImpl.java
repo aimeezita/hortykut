@@ -1,4 +1,4 @@
-package com.generation.hortykut.security;
+package com.github.hortykut.hortykut.security;
 
 import java.util.Collection;
 import java.util.List;
