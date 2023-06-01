@@ -11,6 +11,13 @@ public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @NotBlank(message = "Este campo é obrigatorio por favor coloque uma mensagem")
+    private String descricao;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria", cascade = CascadeType.REMOVE)
+    @JsonIgnoreProperties("categoria")
+    private List<Produto> produtos;
 
     public Long getId() {
 		return id;
@@ -36,10 +43,4 @@ public class Categoria {
 		this.produtos = produtos;
 	}
 
-	@NotBlank(message = "Este campo é obrigatorio por favor coloque uma mensagem")
-    private String descricao;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "categoria", cascade = CascadeType.REMOVE)
-    @JsonIgnoreProperties("categoria")
-    private List<Produto> produtos;
 }
