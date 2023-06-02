@@ -10,12 +10,15 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/produto")
 public class ProdutoController {
+	
     @Autowired
     private ProdutoRepository produtoRepository ;
+    
     @GetMapping
-    public List<Produto> listarUsuarios() {
+    public List<Produto> listarProdutos() {
         return produtoRepository.findAll();
     }
+    
     @GetMapping("/{id}")
     public Optional<Produto> buscarProdutoPorId(@PathVariable Long id) {
       return produtoRepository.findById(id);
