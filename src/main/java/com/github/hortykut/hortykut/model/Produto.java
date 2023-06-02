@@ -2,6 +2,7 @@ package com.github.hortykut.hortykut.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "tb_produto")
@@ -13,7 +14,7 @@ public class Produto {
     @NotBlank(message = "Este campo é obrigatório")
     private String produto;
     
-    @NotBlank(message = "Este campo é obrigatório")
+    @NotNull(message = "Este campo é obrigatório")
     private double valor;
     
     @NotBlank(message = "Este campo é obrigatorio")
