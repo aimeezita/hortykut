@@ -43,7 +43,16 @@ public class Usuario {
 	private List<Produto> produto;
 
 	//Getters e Setters
-	
+
+	public Usuario(){}
+	public Usuario(Long id, String nome, String usuario, String senha, String foto) {
+		this.id = id;
+		this.nome = nome;
+		this.usuario = usuario;
+		this.senha = senha;
+		this.foto = foto;
+	}
+
 	public Long getId() {
 		return id;
 	}

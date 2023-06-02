@@ -1,10 +1,10 @@
-package com.github.hortikut.hortikut;
+package com.github.hortykut.hortykut;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class HortikutApplicationTests {
+class HortykutApplicationTests {
 
     @Test
     void contextLoads() {

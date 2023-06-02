@@ -1,101 +1,87 @@
 package com.github.hortykut.hortykut.service;
 
-import java.nio.charset.Charset;
 import java.util.Optional;
-
-import org.apache.commons.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.github.hortykut.hortykut.model.Usuario;
 import com.github.hortykut.hortykut.model.UsuarioLogin;
 import com.github.hortykut.hortykut.repository.UsuarioRepository;
+import com.github.hortykut.hortykut.security.JwtService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+
 
 @Service
 public class UsuarioService {
 
 	@Autowired
-    private UsuarioRepository usuarioRepository;
+	private UsuarioRepository usuarioRepository;
 
-    public Optional<Usuario> cadastrarUsuario(Usuario usuario) {
+	@Autowired
+	private JwtService jwtService;
 
-        if (usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent())
-            return Optional.empty();
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
-        usuario.setSenha(criptografarSenha(usuario.getSenha()));
+	public Optional<Usuario> cadastrarUsuario(Usuario usuario){
+		if(usuarioRepository.findByUsuario(usuario.getUsuario()).isPresent())
+			return Optional.empty();
 
-        return Optional.of(usuarioRepository.save(usuario));
-    
-    }
+		usuario.setSenha(criptografarSenha(usuario.getSenha()));
 
-    public Optional<Usuario> atualizarUsuario(Usuario usuario) {
-        
-        if(usuarioRepository.findById(usuario.getId()).isPresent()) {
+		return Optional.of(usuarioRepository.save(usuario));
 
-            Optional<Usuario> buscaUsuario = usuarioRepository.findByUsuario(usuario.getUsuario());
+	}
 
-            if ( (buscaUsuario.isPresent()) && ( buscaUsuario.get().getId() != usuario.getId()))
-                throw new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST, "Usuário já existe!", null);
+	public Optional<Usuario> atualizarUsuario(Usuario usuario){
+		if(usuarioRepository.findById(usuario.getId()).isPresent()) {
+			Optional<Usuario> buscaUsuario = usuarioRepository.findByUsuario(usuario.getUsuario());
 
-            usuario.setSenha(criptografarSenha(usuario.getSenha()));
+			if((buscaUsuario.isPresent()) && (buscaUsuario.get().getId() != usuario.getId()))
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuáro já exisite");
 
-            return Optional.ofNullable(usuarioRepository.save(usuario));
-            
-        }
+			usuario.setSenha(criptografarSenha(usuario.getSenha()));
 
-        return Optional.empty();
-    
-    }   
+			return Optional.ofNullable(usuarioRepository.save(usuario));
 
-    public Optional<UsuarioLogin> autenticarUsuario(Optional<UsuarioLogin> usuarioLogin) {
+		}
+		return Optional.empty();
+	}
 
-        Optional<Usuario> usuario = usuarioRepository.findByUsuario(usuarioLogin.get().getUsuario());
+	public Optional<UsuarioLogin> autenticarUsuario(Optional<UsuarioLogin> usuarioLogin){
+		var credenciais = new UsernamePasswordAuthenticationToken(usuarioLogin.get().getUsuario(), usuarioLogin.get().getSenha());
+		Authentication authentication = authenticationManager.authenticate(credenciais);
 
-        if (usuario.isPresent()) {
+		if(authentication.isAuthenticated()) {
+			Optional<Usuario> usuario = usuarioRepository.findByUsuario(usuarioLogin.get().getUsuario());
 
-            if (compararSenhas(usuarioLogin.get().getSenha(), usuario.get().getSenha())) {
+			if(usuario.isPresent()) {
+				usuarioLogin.get().setId(usuario.get().getId());
+				usuarioLogin.get().setNome(usuario.get().getNome());
+				usuarioLogin.get().setFoto(usuario.get().getFoto());
+				usuarioLogin.get().setToken(gerarToken(usuarioLogin.get().getUsuario()));
+				usuarioLogin.get().setSenha("");
 
-                usuarioLogin.get().setId(usuario.get().getId());
-                usuarioLogin.get().setNome(usuario.get().getNome());
-                usuarioLogin.get().setFoto(usuario.get().getFoto());
-                usuarioLogin.get().setToken(gerarBasicToken(usuarioLogin.get().getUsuario(),        usuarioLogin.get().getSenha()));
-                usuarioLogin.get().setSenha(usuario.get().getSenha());
+				return usuarioLogin;
+			}
+		}
+		return Optional.empty();
+	}
 
-                return usuarioLogin;
+	private String criptografarSenha(String senha) {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-            }
-        }   
+		return encoder.encode(senha);
+	}
 
-        return Optional.empty();
-        
-    }
+	private String gerarToken(String usuario) {
+		return "Bearer " + jwtService.generateToken(usuario);
+	}
 
-    private String criptografarSenha(String senha) {
-
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        
-        return encoder.encode(senha);
-
-    }
-    
-    private boolean compararSenhas(String senhaDigitada, String senhaBanco) {
-        
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        
-        return encoder.matches(senhaDigitada, senhaBanco);
-
-    }
-
-    private String gerarBasicToken(String usuario, String senha) {
-
-        String token = usuario + ":" + senha;
-        byte[] tokenBase64 = Base64.encodeBase64(token.getBytes(Charset.forName("US-ASCII")));
-        return "Basic " + new String(tokenBase64);
-
-    }
-	
 }
