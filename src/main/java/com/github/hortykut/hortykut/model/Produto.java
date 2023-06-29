@@ -31,6 +31,16 @@ public class Produto {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+	private String foto;
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
 	public String getDescricao() {
 		return descricao;
 	}
