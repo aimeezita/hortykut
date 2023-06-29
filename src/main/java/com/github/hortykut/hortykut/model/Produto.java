@@ -31,11 +31,11 @@ public class Produto {
     private String descricao;
     
 	@ManyToOne
-	@JsonIgnoreProperties(value = "produto")
+	@JsonIgnoreProperties("produtos")
     private Categoria categoria;
     
     @ManyToOne
-    @JsonIgnoreProperties(value = "produto")
+    @JsonIgnoreProperties("produto")
      private Usuario usuario;
 
 	private String foto;
