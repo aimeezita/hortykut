@@ -9,6 +9,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/categoria")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CategoriaController {
     @Autowired
     private CategoriaRepository categoriaRepository;
