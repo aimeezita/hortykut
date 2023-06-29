@@ -19,6 +19,9 @@ public class Produto {
     
     @NotBlank(message = "Este campo é obrigatorio")
     private String responsavel;
+	
+	@NotBlank(message = "Este campo é obrigatorio")
+    private String descricao;
     
 	@ManyToOne
     @JoinColumn(name = "categoria_id")
@@ -28,6 +31,14 @@ public class Produto {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
 	public Long getId() {
 		return id;
 	}
