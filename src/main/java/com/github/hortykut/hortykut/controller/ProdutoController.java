@@ -38,6 +38,7 @@ public class ProdutoController {
             produto.setResponsavel(produtoAtualizado.getResponsavel());
             produto.setValor(produtoAtualizado.getValor());
 		 produto.setDescricao(produtoAtualizado.getDescricao());
+		produto.setFoto(produtoAtualizado.getFoto());
             return produtoRepository.save(produto);
         } else {
             throw new IllegalArgumentException("ID do usuário inválido: " + id);
