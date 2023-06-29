@@ -24,10 +24,13 @@ public class ProdutoController {
     public Optional<Produto> buscarProdutoPorId(@PathVariable Long id) {
       return produtoRepository.findById(id);
     }
-    @PostMapping
-    public Produto criarProduto(@RequestBody Produto produto){
-        return produtoRepository.save(produto);
-    }
+   @PostMapping
+	public ResponseEntity<Produto> criarProduto(@Valid @RequestBody Produto produto) {
+		if (categoriaRepository.existsById(produto.getCategoria().getId()))
+			return ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(produto));
+
+		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Categoria não existe!", null);
+}
     @PutMapping("/{id}")
     public Produto atualizarProduto(@PathVariable Long id, @RequestBody Produto produtoAtualizado) {
         Optional<Produto> produtoExistente = produtoRepository.findById(id);
