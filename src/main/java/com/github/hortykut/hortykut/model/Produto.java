@@ -1,6 +1,13 @@
 package com.github.hortykut.hortykut.model;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -24,12 +31,12 @@ public class Produto {
     private String descricao;
     
 	@ManyToOne
-    @JoinColumn(name = "categoria_id")
+	@JsonIgnoreProperties(value = "produto")
     private Categoria categoria;
     
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
+    @JsonIgnoreProperties(value = "produto")
+     private Usuario usuario;
 
 	private String foto;
 
